@@ -30,9 +30,7 @@ void serial_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)
     ROS_INFO("the orientation(x,y,z,w) is %f , %f, %f, %f", msg->pose.orientation.x, msg->pose.orientation.y, msg->pose.orientation.z, msg->pose.orientation.w);
     ROS_INFO("the time we get the pose is %f",  msg->header.stamp.sec + 1e-9*msg->header.stamp.nsec);
     std::cout<<"\n \n"<<std::endl; //add two more blank row so that we can see the message more clearly
-    ROS_INFO("the first position x is %f ", positionX);
-    std::cout<<"\n \n"<<std::endl; //add two more blank row so that we can see the message more clearly
- 
+    
 }
 
 
@@ -43,7 +41,7 @@ int main(int agrc,char **argv)
     ros::init(agrc,argv,"public_node");
     ros::NodeHandle nh;
     // 创建一个Subscriber，订阅名为chatter的topic，注册回调函数serial_callback
-	ros::Subscriber sub = nh.subscribe("vrpn_client_node/body2/pose", 1000, serial_callback);
+	ros::Subscriber sub = nh.subscribe("vrpn_client_node/body3/pose", 1000, serial_callback);
 
     ros::Rate loop_rate(10);
     
@@ -54,10 +52,7 @@ int main(int agrc,char **argv)
     {
         ros::spinOnce();
         //向STM32端发送接收到的动捕数据，pose和orientation
-        ROS_INFO("i am going to write ");
-        ROS_INFO("the second position x is %f ", positionX);
-        std::cout<<"\n \n"<<std::endl; //add two more blank row so that we can see the message more clearly
- 
+       
 	      write_pose_and_orientation(positionX, positionY, positionZ,
                  orientationX, orientationY,orientationZ,orientationW);
         //从STM32接收数据，输入参数依次转化为小车的线速度、角速度、航向角（角度）、预留控制位

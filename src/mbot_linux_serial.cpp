@@ -16,15 +16,14 @@ union sendData
 {
     double d;
     unsigned char data[8];
-} leftVelSet,rightVelSet,positionX_set, positionY_set, positionZ_set, orientationX_set, orientationY_set, orientationZ_set, orientationW_set;
+} positionX_set, positionY_set, positionZ_set, orientationX_set, orientationY_set, orientationZ_set, orientationW_set;
 
 // 接收飞控数据给linux 共用体
 union receiveData
 {
     double d;
     unsigned char data[8];
-} positionX_rec, positionY_rec, positionZ_rec, orientationX_rec, orientationY_rec, orientationZ_rec, orientationW_rec;
-
+} positionX_rec_32, positionY_rec_32, positionZ_rec_32, orientationX_rec_32, orientationY_rec_32, orientationZ_rec_32, orientationW_rec_32;
 unsigned char buf[62] = {0}; //
 /********************************************************
 函数功能：串口参数初始化
@@ -83,11 +82,12 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     boost::asio::write(sp, boost::asio::buffer(buf));
 }
 /********************************************************
-函数功能：从下位机读取数据
-入口参数：机器人左轮轮速、右轮轮速、角度，预留控制位
+函数功能：从下位机读取数据发送给ubuntu
+入口参数：pose and orientation
 出口参数：bool
 ********************************************************/
-/*bool readSpeed(double &Left_v, double &Right_v, double &Angle, unsigned char &ctrlFlag)
+bool read_pose_and_orientation(double &positionX_rec, double &positionY_rec, double &positionZ_rec,
+                               double &orientationX_rec, double &orientationY_rec, double &orientationZ_rec, double &orientationW_rec)
 {
     char i, length = 0;
     unsigned char checkSum;
@@ -134,12 +134,22 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     }
 
     // 读取控制标志位
-    ctrlFlag = buf[9];
-
-    Left_v = leftVelNow.d;
-    Right_v = rightVelNow.d;
-    Angle = angleNow.d;
-
+    // 读取速度值
+    memcpy(&positionX_rec_32.data, &buf[3], 8);
+    memcpy(&positionY_rec_32.data, &buf[11], 8);
+    memcpy(&positionZ_rec_32.data, &buf[19], 8);
+    memcpy(&orientationX_rec_32.data, &buf[27], 8);
+    memcpy(&orientationY_rec_32.data, &buf[35], 8);
+    memcpy(&orientationZ_rec_32.data, &buf[43], 8);
+    memcpy(&orientationW_rec_32.data, &buf[51], 8);
+  
+    positionX_rec = positionX_rec_32.d;
+    positionY_rec = positionY_rec_32.d;
+    positionZ_rec = positionZ_rec_32.d;
+    orientationX_rec = orientationX_rec_32.d;
+    orientationY_rec = orientationY_rec_32.d;
+    orientationZ_rec = orientationZ_rec_32.d;
+    orientationW_rec = orientationW_rec_32.d;
     return true;
 }
 /********************************************************

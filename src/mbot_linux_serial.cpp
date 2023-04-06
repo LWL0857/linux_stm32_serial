@@ -16,7 +16,8 @@ union sendData
 {
     double d;
     unsigned char data[8];
-} positionX_set, positionY_set, positionZ_set, orientationX_set, orientationY_set, orientationZ_set, orientationW_set;
+} positionX_mocap, positionY_mocap, positionZ_mocap, 
+orientationX_mocap,orientationY_mocap, orientationZ_mocap, orientationW_mocap;
 
 // 接收飞控数据给linux 共用体
 union receiveData
@@ -48,13 +49,13 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
                                 double orientationX, double orientationY, double orientationZ, double orientationW)
 {
     int i, length = 0;
-    positionX_set.d = positionX; // mm/s
-    positionY_set.d = positionY;
-    positionZ_set.d = positionZ;
-    orientationX_set.d = orientationX;
-    orientationY_set.d = orientationY;
-    orientationZ_set.d = orientationZ;
-    orientationW_set.d =orientationW;
+    positionX_mocap.d = positionX; // mm/s
+    positionY_mocap.d = positionY;
+    positionZ_mocap.d = positionZ;
+    orientationX_mocap.d = orientationX;
+    orientationY_mocap.d = orientationY;
+    orientationZ_mocap.d = orientationZ;
+    orientationW_mocap.d =orientationW;
     //数据传输的数据头
     for (i = 0; i < 2; i++)
         buf[i] = header[i]; // buf[0]  buf[1]
@@ -63,13 +64,13 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     length = 56;
     buf[2] = length; // buf[2]
 
-    memcpy(&buf[3], &positionX_set.data, 8);
-    memcpy(&buf[11], &positionY_set.data, 8);
-    memcpy(&buf[19], &positionZ_set.data, 8);
-    memcpy(&buf[27], &orientationX_set.data, 8);
-    memcpy(&buf[35], &orientationY_set.data, 8);
-    memcpy(&buf[43], &orientationZ_set.data, 8);
-    memcpy(&buf[51], &orientationW_set.data, 8);
+    memcpy(&buf[3], &positionX_mocap.data, 8);
+    memcpy(&buf[11], &positionY_mocap.data, 8);
+    memcpy(&buf[19], &positionZ_mocap.data, 8);
+    memcpy(&buf[27], &orientationX_mocap.data, 8);
+    memcpy(&buf[35], &orientationY_mocap.data, 8);
+    memcpy(&buf[43], &orientationZ_mocap.data, 8);
+    memcpy(&buf[51], &orientationW_mocap.data, 8);
     // 设置校验值、消息尾
     buf[3 + length] = getCrc8(buf, 3 + length); // buf[59]
     buf[3 + length + 1] = ender[0];             // buf[60]

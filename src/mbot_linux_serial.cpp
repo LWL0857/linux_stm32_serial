@@ -49,7 +49,7 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
 {
     int i, length = 0;
     positionX_set.d = positionX; // mm/s
-    positionY_set.d = positionY;leftVelNow
+    positionY_set.d = positionY;
     positionZ_set.d = positionZ;
     orientationX_set.d = orientationX;
     orientationY_set.d = orientationY;

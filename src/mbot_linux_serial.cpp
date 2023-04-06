@@ -1,6 +1,4 @@
 #include "mbot_linux_serial.h"
-
-
 using namespace std;
 using namespace boost::asio;
 // 串口相关对象

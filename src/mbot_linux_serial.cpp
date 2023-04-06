@@ -47,22 +47,19 @@ void serialInit()
 void write_pose_and_orientation(double positionX, double positionY, double positionZ,
                                 double orientationX, double orientationY, double orientationZ, double orientationW)
 {
-    
     int i, length = 0;
-    ROS_INFO("the third position x is %f ", positionX);
-
     positionX_set.d = positionX; // mm/s
-    positionY_set.d = positionY;
+    positionY_set.d = positionY;leftVelNow
     positionZ_set.d = positionZ;
     orientationX_set.d = orientationX;
     orientationY_set.d = orientationY;
     orientationZ_set.d = orientationZ;
     orientationW_set.d =orientationW;
-    
+    //数据传输的数据头
     for (i = 0; i < 2; i++)
         buf[i] = header[i]; // buf[0]  buf[1]
 
-    // 设置机器人左右轮速度
+    // 将动捕数据移动到buf中
     length = 56;
     buf[2] = length; // buf[2]
 

@@ -78,6 +78,9 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     
     // 通过串口下发数据
     boost::asio::write(sp, boost::asio::buffer(buf));
+    for(int i=0;i<62;i++)
+    {cout<<hex<<i<<endl; }
+    
 }
 /********************************************************
 函数功能：从下位机读取数据发送给ubuntu

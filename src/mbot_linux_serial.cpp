@@ -59,8 +59,7 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     orientationY_set.d = orientationY;
     orientationZ_set.d = orientationZ;
     orientationW_set.d =orientationW;
-    ROS_INFO("the ***** position x is %f ", positionX_set.d);
-    // 设置消息头
+    
     for (i = 0; i < 2; i++)
         buf[i] = header[i]; // buf[0]  buf[1]
 
@@ -75,41 +74,11 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     memcpy(&buf[35], &orientationY_set.data, 8);
     memcpy(&buf[43], &orientationZ_set.data, 8);
     memcpy(&buf[51], &orientationW_set.data, 8);
- /*
-    for (i = 0; i < 7; i++)
-    {
-       buf[i + 3] =positionX_set.data[i];  // buf[3]-buf[10]
-       //ROS_INFO("the ***** position x is %s ", positionX_set.data[i]);
-       buf[i + 11] =positionX_set.data[i]; // buf[11]-buf[18].
-       buf[i + 19] =positionX_set.data[i];// buf[19]-buf[26]
-       buf[i + 27] =orientationX_set.data[i];// buf[17]-buf[34]
-       buf[i + 35] =orientationX_set.data[i];
-       buf[i + 43] =orientationX_set.data[i];
-       buf[i + 51] =orientationX_set.data[i];// buf[51]-buf[58]
-    }*/
-    // 预留控制指令
-    //buf[3 + length - 1] = ctrlFlag; // buf[52]
-
     // 设置校验值、消息尾
     buf[3 + length] = getCrc8(buf, 3 + length); // buf[59]
     buf[3 + length + 1] = ender[0];             // buf[60]
     buf[3 + length + 2] = ender[1];             // buf[61]
     
-    positionX_set.data[0] = buf[3];
-    positionX_set.data[1] = buf[4];
-    positionX_set.data[2] = buf[5];
-    positionX_set.data[3] = buf[6];
-    positionX_set.data[4] = buf[7];
-    positionX_set.data[5] = buf[8];
-    positionX_set.data[6] = buf[9];
-    positionX_set.data[7] = buf[10];
-    for (int i = 0; i < 8; i++)
-    {
-
-        cout << i << "***** positionX_set.d is " << positionX_set.data[i] << endl;
-    }
-   
-    cout << " positionX_set.d is " << positioSUOnX_set.d << endl;
     // 通过串口下发数据
     boost::asio::write(sp, boost::asio::buffer(buf));
 }

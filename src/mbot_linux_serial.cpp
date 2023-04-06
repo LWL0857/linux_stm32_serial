@@ -124,15 +124,6 @@ bool read_pose_and_orientation(double &positionX_rec, double &positionY_rec, dou
         ROS_ERROR("Received data check sum error!");
         return false;
     }
-
-    // 读取速度值
-    for (i = 0; i < 2; i++)
-    {
-        leftVelNow.data[i] = buf[i + 3];  // buf[3] buf[4]
-        rightVelNow.data[i] = buf[i + 5]; // buf[5] buf[6]
-        angleNow.data[i] = buf[i + 7];    // buf[7] buf[8]
-    }
-
     // 读取控制标志位
     // 读取速度值
     memcpy(&positionX_rec_32.data, &buf[3], 8);

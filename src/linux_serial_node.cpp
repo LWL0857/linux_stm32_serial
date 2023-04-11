@@ -34,10 +34,10 @@ void serial_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
 
 int main(int agrc, char **argv)
 {
-    ros::init(agrc, argv, "public_node");
+    ros::init(agrc, argv, "linux_serial_node");
     ros::NodeHandle nh;
     // 创建一个Subscriber，订阅名为chatter的topic，注册回调函数serial_callback
-    ros::Subscriber sub = nh.subscribe("vrpn_client_node/body3/pose", 1000, serial_callback);
+    ros::Subscriber sub = nh.subscribe("chatter", 1000, serial_callback);
 
     ros::Rate loop_rate(10);
 

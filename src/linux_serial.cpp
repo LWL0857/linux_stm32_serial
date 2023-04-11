@@ -1,5 +1,7 @@
 #include "linux_serial.h"
+#include <serial/serial.h>
 using namespace std;
+using namespace boost::asio;
 
 boost::asio::io_service iosev;
 boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");

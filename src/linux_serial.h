@@ -9,11 +9,10 @@
 #include <boost/asio.hpp>
 #include <geometry_msgs/Twist.h>
 #include <serial/serial.h>
-extern void serialInit();
+extern void openserial();
+extern  void serial_callback(const geometry_msgs::PoseStamped::ConstPtr &msg);
 extern void write_pose_and_orientation(double positionX, double positionY,double  positionZ,
                  double orientationX, double orientationY,double orientationZ,double orientationW);
-extern bool read_pose_and_orientation(double &positionX_rec, double &positionY_rec, double &positionZ_rec,
-                               double &orientationX_rec, double &orientationY_rec, double &orientationZ_rec, double &orientationW_rec);
 unsigned char getCrc8(unsigned char *ptr, unsigned short len);
 
 #endif

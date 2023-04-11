@@ -1,10 +1,5 @@
-#include "mbot_linux_serial.h"
+#include "inux_serial.h"
 using namespace std;
-using namespace boost::asio;
-// 串口相关对象
-boost::asio::io_service iosev;
-boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");
-boost::system::error_code err;
 
 serial::Serial ser;//串口变量
 
@@ -100,7 +95,8 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     buf[3 + length + 2] = ender[1];             // buf[61]
     
     // 通过串口下发数据
-    boost::asio::write(sp, boost::asio::buffer(buf));
+    ser.write(buf,62);
+    //boost::asio::write(sp, boost::asio::buffer(buf));
     for(int i=0;i<62;i++)
     {cout<<hex<<(int)buf[i]<<endl; }
     

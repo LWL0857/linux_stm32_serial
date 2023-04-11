@@ -1,7 +1,7 @@
 
 #include "ros/ros.h"
 #include "std_msgs/String.h" //use data struct of std_msgs/String
-#include "mbot_linux_serial.h"
+#include "linux_serial.h"
 #include "geometry_msgs/PoseStamped.h"
 // test send value
 double testSend1 = 5555.0;
@@ -43,6 +43,7 @@ int main(int agrc, char **argv)
 
     // 串口初始化
     // serialInit();
+     openserial();
 
     while (ros::ok())
     {

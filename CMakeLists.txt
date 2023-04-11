@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(topic_example)
+project(linux_serial)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -34,7 +34,7 @@ include_directories(
 
 
 
-add_executable(publish_node src/publish_node.cpp 
-			    src/mbot_linux_serial.cpp)
-target_link_libraries(publish_node ${catkin_LIBRARIES})
+add_executable(linux_serial_node src/linux_serial_node.cpp 
+			    src/linux_serial.cpp)
+target_link_libraries(linux_serial_node ${catkin_LIBRARIES})
 

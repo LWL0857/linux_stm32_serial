@@ -1,5 +1,10 @@
-#include "inux_serial.h"
+#include "linux_serial.h"
 using namespace std;
+
+boost::asio::io_service iosev;
+boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");
+boost::system::error_code err;
+
 
 serial::Serial ser;//串口变量
 

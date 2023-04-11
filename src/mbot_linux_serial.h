@@ -8,7 +8,7 @@
 #include <nav_msgs/Odometry.h>
 #include <boost/asio.hpp>
 #include <geometry_msgs/Twist.h>
-
+#include <serial/serial.h>
 extern void serialInit();
 extern void write_pose_and_orientation(double positionX, double positionY,double  positionZ,
                  double orientationX, double orientationY,double orientationZ,double orientationW);

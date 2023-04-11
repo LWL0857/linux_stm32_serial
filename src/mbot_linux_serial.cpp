@@ -5,6 +5,29 @@ using namespace boost::asio;
 boost::asio::io_service iosev;
 boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");
 boost::system::error_code err;
+
+serial::Serial ser;//串口变量
+
+//打开串口
+void openserial()
+	{
+		try
+			{
+				ser.setPort("/dev/ttyUSB0");//设备端口号
+				ser.setBaudrate(115200);//波特率
+				serial::Timeout t = serial::Timeout::simpleTimeout(1000);//这个应该是超时，但是是必须的！！ 
+      			ser.setTimeout(t); 
+				ser.open();//打开串口
+			}
+		catch (serial::IOException& e) 
+    			{ 
+        			ROS_ERROR_STREAM("Unable to open port "); 
+    			} 
+		if(ser.isOpen())
+			{
+				ROS_INFO("OPEN");
+			}
+	}
 /********************************************************
             串口发送接收相关常量、变量、共用体对象
 ********************************************************/

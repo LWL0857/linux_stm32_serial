@@ -119,8 +119,17 @@ bool read_pose_and_orientation(double &positionX_rec, double &positionY_rec, dou
     char i, length = 0;
     unsigned char checkSum;
     unsigned char buf[150] = {0};
+    size_t w=ser.available();//串口缓存区字节数
+    if(w!=0)
+					{
+						ser.read(buf,w);
+                        w=0;
+						
+					}
+
     //=========================================================
     // 此段代码可以读数据的结尾，进而来进行读取数据的头部
+    /*
     try
     {
         boost::asio::streambuf response;
@@ -134,6 +143,7 @@ bool read_pose_and_orientation(double &positionX_rec, double &positionY_rec, dou
         ROS_INFO("read_until error");
     }
     //=========================================================
+    */
 
     // 检查信息头
     if (buf[0] != header[0] || buf[1] != header[1]) // buf[0] buf[1]

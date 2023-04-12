@@ -36,8 +36,12 @@ int main(int agrc, char **argv)
 {
     ros::init(agrc, argv, "linux_serial_node");
     ros::NodeHandle nh;
+    std::string s;
+    nh.param<std::string>("serial_topic_name_param", s, "my_chatter");
     // 创建一个Subscriber，订阅名为chatter的topic，注册回调函数serial_callback
-    ros::Subscriber sub = nh.subscribe("chatter", 1000, serial_callback);
+    ros::Subscriber sub = nh.subscribe(s, 1000, serial_callback);
+
+   
 
     ros::Rate loop_rate(10);
 

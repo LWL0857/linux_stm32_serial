@@ -104,8 +104,8 @@ void write_pose_and_orientation(double positionX, double positionY, double posit
     // 通过串口下发数据
     ser.write(buf,62);
     //boost::asio::write(sp, boost::asio::buffer(buf));
-    for(int i=0;i<62;i++)
-    {cout<<hex<<(int)buf[i]<<endl; }
+   // for(int i=0;i<62;i++)
+    //{cout<<hex<<(int)buf[i]<<endl; }
     
 }
 /********************************************************

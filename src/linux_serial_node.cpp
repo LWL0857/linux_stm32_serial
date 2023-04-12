@@ -57,7 +57,7 @@ int main(int agrc, char **argv)
         write_pose_and_orientation(positionX, positionY, positionZ,
                                    orientationX, orientationY, orientationZ, orientationW);
         // 从STM32接收数据，输入参数依次转化为小车的线速度、角速度、航向角（角度）、预留控制位
-        // readSpeed(testRece1,testRece2,testRece3,testRece4);
+        //readSpeed(testRece1,testRece2,testRece3,testRece4);
         // 打印数据
         // ROS_INFO("%f,%f,%f,%d\n",testRece1,testRece2,testRece3,testRece4);
 
